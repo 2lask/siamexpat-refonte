@@ -393,7 +393,10 @@ export function CinematicHero({
           {
             scale: 1.15,
             filter: "blur(20px)",
-            opacity: 0.2,
+            // Fully fade taglines to 0 so their orange drop-shadows don't
+            // leave a halo behind the card content. (Was 0.2 — that 20%
+            // residual was what created the visible orange blobs on mobile.)
+            opacity: 0,
             ease: "power2.inOut",
             duration: 2,
           },
@@ -647,10 +650,10 @@ export function CinematicHero({
           <div className="card-sheen" aria-hidden="true" />
 
           <div className="relative z-10 mx-auto flex h-full w-full max-w-7xl flex-col items-center justify-between px-4 py-4 sm:justify-evenly sm:py-6 lg:grid lg:grid-cols-3 lg:gap-8 lg:px-12 lg:py-0">
-            {/* BRAND NAME — mobile: floats top-right behind iPhone (watermark
-                style); desktop: normal grid column on the right. */}
-            <div className="card-right-text gsap-reveal pointer-events-none absolute right-2 top-[8%] z-0 max-w-[70%] text-right lg:pointer-events-auto lg:relative lg:right-auto lg:top-auto lg:order-3 lg:z-20 lg:flex lg:max-w-none lg:w-full lg:justify-end">
-              <h2 className="font-serif text-[3.5rem] font-black uppercase leading-none tracking-tighter text-primary drop-shadow-[0_10px_22px_rgba(224,93,56,0.45)] sm:text-[4.5rem] lg:text-[8rem]">
+            {/* BRAND NAME — hidden on mobile (kept the visual clean per user
+                request), shown only on desktop in the right grid column. */}
+            <div className="card-right-text gsap-reveal hidden z-20 lg:order-3 lg:flex lg:w-full lg:justify-end">
+              <h2 className="font-serif text-[8rem] font-black uppercase leading-none tracking-tighter text-primary drop-shadow-[0_10px_22px_rgba(224,93,56,0.45)]">
                 {brandName}
               </h2>
             </div>
