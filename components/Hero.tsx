@@ -31,15 +31,66 @@ export default function Hero() {
   const videoRef = useRef<HTMLVideoElement | null>(null);
 
   useEffect(() => {
-    // Force-play the background video — fallback for iOS Safari edge cases
     const v = videoRef.current;
-    if (v) {
-      const tryPlay = () => v.play().catch(() => {});
+    if (!v) return;
+
+    // Belt-and-suspenders autoplay for iOS Safari, Android Chrome, low-power modes,
+    // background tabs, intersection visibility, and the first user touch.
+    const tryPlay = () => {
+      if (v.paused) v.play().catch(() => {});
+    };
+
+    // 1. Try immediately on mount, and on a short retry loop in case the video
+    //    isn't decoded yet.
+    tryPlay();
+    const retries = [50, 150, 500, 1200].map((delay) =>
+      window.setTimeout(tryPlay, delay),
+    );
+
+    // 2. When the video element fires `loadedmetadata` / `canplay`, retry.
+    v.addEventListener("loadedmetadata", tryPlay);
+    v.addEventListener("canplay", tryPlay);
+    v.addEventListener("loadeddata", tryPlay);
+
+    // 3. When the tab becomes visible again, retry.
+    const onVisible = () => {
+      if (!document.hidden) tryPlay();
+    };
+    document.addEventListener("visibilitychange", onVisible);
+
+    // 4. iOS Low Power Mode requires a user gesture — any first touch/click on
+    //    the page unlocks playback, so listen once.
+    const onFirstGesture = () => {
       tryPlay();
-      const onVisible = () => tryPlay();
-      document.addEventListener("visibilitychange", onVisible);
-      return () => document.removeEventListener("visibilitychange", onVisible);
+      window.removeEventListener("touchstart", onFirstGesture);
+      window.removeEventListener("pointerdown", onFirstGesture);
+    };
+    window.addEventListener("touchstart", onFirstGesture, { passive: true });
+    window.addEventListener("pointerdown", onFirstGesture, { passive: true });
+
+    // 5. Intersection observer — play when the hero scrolls into view (handy if
+    //    user navigates away and back without remount).
+    let io: IntersectionObserver | null = null;
+    if ("IntersectionObserver" in window) {
+      io = new IntersectionObserver(
+        (entries) => {
+          for (const entry of entries) if (entry.isIntersecting) tryPlay();
+        },
+        { threshold: 0.01 },
+      );
+      io.observe(v);
     }
+
+    return () => {
+      retries.forEach((id) => window.clearTimeout(id));
+      v.removeEventListener("loadedmetadata", tryPlay);
+      v.removeEventListener("canplay", tryPlay);
+      v.removeEventListener("loadeddata", tryPlay);
+      document.removeEventListener("visibilitychange", onVisible);
+      window.removeEventListener("touchstart", onFirstGesture);
+      window.removeEventListener("pointerdown", onFirstGesture);
+      io?.disconnect();
+    };
   }, []);
 
   useEffect(() => {

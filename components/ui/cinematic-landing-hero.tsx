@@ -322,10 +322,6 @@ export function CinematicHero({
 
   useEffect(() => {
     const isMobile = window.innerWidth < 768;
-    // Skip GSAP entirely on mobile — a dedicated <MobileProgram /> handles that layout.
-    // Running GSAP/ScrollTrigger here even when hidden would still pin the page and
-    // throw off cross-page scroll-to-top navigation.
-    if (isMobile) return;
 
     const ctx = gsap.context(() => {
       gsap.set(".text-track", {
@@ -381,7 +377,8 @@ export function CinematicHero({
         scrollTrigger: {
           trigger: containerRef.current,
           start: "top top",
-          end: "+=4500",
+          // Mobile pin is much shorter so the section doesn't overwhelm small screens
+          end: isMobile ? "+=2200" : "+=4500",
           pin: true,
           scrub: 1,
           anticipatePin: 1,

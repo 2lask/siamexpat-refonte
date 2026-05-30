@@ -1,9 +1,78 @@
 "use client";
 
-import React from "react";
+import React, { useEffect, useRef } from "react";
 import { motion } from "framer-motion";
 
 import { cn } from "@/lib/utils";
+
+function AutoplayVideo({ src }: { src: string }) {
+  const videoRef = useRef<HTMLVideoElement | null>(null);
+
+  useEffect(() => {
+    const v = videoRef.current;
+    if (!v) return;
+    const tryPlay = () => {
+      if (v.paused) v.play().catch(() => {});
+    };
+    tryPlay();
+    const retries = [50, 200, 700, 1500].map((d) =>
+      window.setTimeout(tryPlay, d),
+    );
+    v.addEventListener("loadedmetadata", tryPlay);
+    v.addEventListener("canplay", tryPlay);
+    v.addEventListener("loadeddata", tryPlay);
+    const onVisible = () => {
+      if (!document.hidden) tryPlay();
+    };
+    document.addEventListener("visibilitychange", onVisible);
+    const onFirstGesture = () => {
+      tryPlay();
+      window.removeEventListener("touchstart", onFirstGesture);
+      window.removeEventListener("pointerdown", onFirstGesture);
+    };
+    window.addEventListener("touchstart", onFirstGesture, { passive: true });
+    window.addEventListener("pointerdown", onFirstGesture, { passive: true });
+    let io: IntersectionObserver | null = null;
+    if ("IntersectionObserver" in window) {
+      io = new IntersectionObserver(
+        (entries) => {
+          for (const entry of entries) if (entry.isIntersecting) tryPlay();
+        },
+        { threshold: 0.01 },
+      );
+      io.observe(v);
+    }
+    return () => {
+      retries.forEach((id) => window.clearTimeout(id));
+      v.removeEventListener("loadedmetadata", tryPlay);
+      v.removeEventListener("canplay", tryPlay);
+      v.removeEventListener("loadeddata", tryPlay);
+      document.removeEventListener("visibilitychange", onVisible);
+      window.removeEventListener("touchstart", onFirstGesture);
+      window.removeEventListener("pointerdown", onFirstGesture);
+      io?.disconnect();
+    };
+  }, []);
+
+  return (
+    <video
+      ref={videoRef}
+      autoPlay
+      muted
+      loop
+      playsInline
+      preload="metadata"
+      controls={false}
+      disablePictureInPicture
+      disableRemotePlayback
+      controlsList="nodownload nofullscreen noremoteplayback"
+      className="pointer-events-none h-full w-full object-cover"
+      aria-hidden
+    >
+      <source src={src} type="video/mp4" />
+    </video>
+  );
+}
 
 interface FooterItem {
   label: string;
@@ -177,21 +246,7 @@ const HeroSection2 = React.forwardRef<HTMLDivElement, HeroSection2Props>(
           transition={{ duration: 1.2, ease: "circOut" as const }}
         >
           {videoUrl ? (
-            <video
-              autoPlay
-              muted
-              loop
-              playsInline
-              preload="metadata"
-              controls={false}
-              disablePictureInPicture
-              disableRemotePlayback
-              controlsList="nodownload nofullscreen noremoteplayback"
-              className="pointer-events-none h-full w-full object-cover"
-              aria-hidden
-            >
-              <source src={videoUrl} type="video/mp4" />
-            </video>
+            <AutoplayVideo src={videoUrl} />
           ) : backgroundImage ? (
             <div
               className="h-full w-full bg-cover bg-center"

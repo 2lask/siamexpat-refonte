@@ -1,0 +1,17 @@
+{
+  "hooks": {
+    "Stop": [
+      {
+        "matcher": "",
+        "hooks": [
+          {
+            "type": "command",
+            "shell": "bash",
+            "timeout": 180,
+            "command": "cd /c/Users/rifee/siamexpat-refonte && if [ -z \"$(git status --porcelain)\" ]; then exit 0; fi && echo '🔨 Building...' && npx next build > /tmp/claude-build.log 2>&1 || (echo '❌ BUILD FAILED — push annulé:' >&2; tail -20 /tmp/claude-build.log >&2; exit 1) && git add -A && git commit -m \"auto: $(date +%Y-%m-%d_%H:%M) — claude push\" --quiet && git push --quiet 2>&1 | tail -3 && echo '✅ Pushé sur GitHub'"
+          }
+        ]
+      }
+    ]
+  }
+}
