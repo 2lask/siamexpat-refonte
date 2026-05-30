@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, type ReactNode } from "react";
+import { useEffect, useRef, useState, type ReactNode } from "react";
 import Link from "next/link";
 import { ArrowUpRight } from "lucide-react";
 
@@ -28,10 +28,40 @@ export function FeaturedSpotlight({
   indexNumber = "01",
 }: FeaturedSpotlightProps) {
   const [isHovered, setIsHovered] = useState(false);
+  const wrapperRef = useRef<HTMLAnchorElement | null>(null);
   const ease = "cubic-bezier(0.16, 1, 0.3, 1)";
+
+  // On touch devices (no real hover), trigger the "hovered" state when the
+  // component scrolls into the viewport. Reverts when it leaves so users can
+  // see the animation more than once on scroll-up.
+  useEffect(() => {
+    if (typeof window === "undefined") return;
+    const isTouch =
+      window.matchMedia("(hover: none)").matches ||
+      "ontouchstart" in window;
+    if (!isTouch) return;
+
+    const el = wrapperRef.current;
+    if (!el || !("IntersectionObserver" in window)) {
+      setIsHovered(true); // safest fallback: always show "hovered" state on touch
+      return;
+    }
+
+    const io = new IntersectionObserver(
+      (entries) => {
+        for (const entry of entries) {
+          setIsHovered(entry.intersectionRatio > 0.3);
+        }
+      },
+      { threshold: [0, 0.3, 0.6, 1] },
+    );
+    io.observe(el);
+    return () => io.disconnect();
+  }, []);
 
   return (
     <Link
+      ref={wrapperRef}
       href={ctaHref}
       className="group relative flex cursor-pointer flex-col items-center gap-8 no-underline md:flex-row md:items-start md:gap-12 lg:gap-16"
       onMouseEnter={() => setIsHovered(true)}

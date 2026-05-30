@@ -218,11 +218,20 @@ export default function Hero() {
         disablePictureInPicture
         disableRemotePlayback
         controlsList="nodownload nofullscreen noremoteplayback"
-        className="pointer-events-none absolute inset-0 -z-20 h-full w-full object-cover"
+        className="absolute inset-0 -z-20 h-full w-full object-cover"
         aria-hidden
       >
         <source src="/hero-bg.mp4" type="video/mp4" />
       </video>
+      {/* Invisible tap shield: if autoplay fails and iOS shows the play overlay,
+          a tap anywhere on the hero forces play() without exposing native controls. */}
+      <button
+        type="button"
+        onClick={() => videoRef.current?.play().catch(() => {})}
+        aria-hidden
+        tabIndex={-1}
+        className="absolute inset-0 -z-10 cursor-default appearance-none border-0 bg-transparent p-0"
+      />
 
       <div
         className="absolute inset-0 -z-10 bg-gradient-to-br from-foreground/85 via-foreground/70 to-foreground/55"

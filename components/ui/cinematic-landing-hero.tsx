@@ -336,6 +336,8 @@ export function CinematicHero({
         clipPath: "inset(0 100% 0 0)",
       });
       gsap.set(".main-card", { y: window.innerHeight + 200, autoAlpha: 1 });
+      // On mobile, surface card text + iPhone widgets immediately so users see
+      // every piece of content during the scrub (desktop still gets the staggered reveal).
       gsap.set(
         [
           ".card-left-text",
@@ -344,7 +346,7 @@ export function CinematicHero({
           ".floating-badge",
           ".phone-widget",
         ],
-        { autoAlpha: 0 },
+        { autoAlpha: isMobile ? 1 : 0 },
       );
       gsap.set(".cta-wrapper", {
         autoAlpha: 0,

@@ -63,23 +63,29 @@ export default function Header() {
                 type="button"
                 onClick={() => setOpen((v) => !v)}
                 aria-label={open ? "Fermer le menu" : "Ouvrir le menu"}
-                className="relative z-20 -m-2.5 -mr-4 block cursor-pointer p-2.5 text-foreground lg:hidden"
+                className="relative z-20 -mr-1 flex shrink-0 cursor-pointer items-center gap-2 rounded-full border border-border/60 bg-card/80 px-3 py-2 text-foreground backdrop-blur-md lg:hidden"
               >
-                <Menu
-                  className={cn(
-                    "m-auto size-6 duration-200",
-                    open && "rotate-180 scale-0 opacity-0",
-                  )}
-                />
-                <X
-                  className={cn(
-                    "absolute inset-0 m-auto size-6 -rotate-180 scale-0 opacity-0 duration-200",
-                    open && "rotate-0 scale-100 opacity-100",
-                  )}
-                />
+                <div className="relative h-5 w-5">
+                  <Menu
+                    className={cn(
+                      "absolute inset-0 m-auto size-5 duration-200",
+                      open && "rotate-180 scale-0 opacity-0",
+                    )}
+                  />
+                  <X
+                    className={cn(
+                      "absolute inset-0 m-auto size-5 -rotate-180 scale-0 opacity-0 duration-200",
+                      open && "rotate-0 scale-100 opacity-100",
+                    )}
+                  />
+                </div>
+                <span className="text-xs font-semibold uppercase tracking-[0.18em]">
+                  {open ? "Fermer" : "Menu"}
+                </span>
               </button>
             </div>
 
+            {/* Desktop NAV pill */}
             <div className="absolute inset-0 m-auto hidden size-fit lg:block">
               <ul className="flex items-center gap-1 rounded-full border border-border/60 bg-card/80 px-2 py-1 text-sm shadow-sm backdrop-blur-md">
                 {NAV.map((item) => (
