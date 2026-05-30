@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect } from "react";
+import { useEffect, useRef } from "react";
 import Link from "next/link";
 import { ArrowRight } from "lucide-react";
 
@@ -28,6 +28,20 @@ const transitionVariants = {
 };
 
 export default function Hero() {
+  const videoRef = useRef<HTMLVideoElement | null>(null);
+
+  useEffect(() => {
+    // Force-play the background video — fallback for iOS Safari edge cases
+    const v = videoRef.current;
+    if (v) {
+      const tryPlay = () => v.play().catch(() => {});
+      tryPlay();
+      const onVisible = () => tryPlay();
+      document.addEventListener("visibilitychange", onVisible);
+      return () => document.removeEventListener("visibilitychange", onVisible);
+    }
+  }, []);
+
   useEffect(() => {
     if (typeof window === "undefined") return;
     if ("scrollRestoration" in window.history) {
@@ -39,13 +53,18 @@ export default function Hero() {
     let activeTimeout: number | undefined;
     let cancelled = false;
 
-    // Robust scroll-to-hash with GSAP-aware stability detection.
+    // Robust scroll with GSAP-aware stability detection.
     // Re-checks scrollHeight each frame; once stable for ~10 frames, stops.
-    const scrollToHashStable = (hash: string) => {
+    // Pass hash to scroll to that anchor, or null to scroll to top.
+    const scrollStable = (hash: string | null) => {
       cancelAnimationFrame(activeRaf);
       if (activeTimeout) window.clearTimeout(activeTimeout);
 
       const scrollToTarget = () => {
+        if (hash === null) {
+          window.scrollTo({ top: 0, left: 0, behavior: "instant" as ScrollBehavior });
+          return;
+        }
         const el = document.querySelector(hash) as HTMLElement | null;
         if (!el) return;
         const top = el.getBoundingClientRect().top + window.scrollY;
@@ -76,11 +95,14 @@ export default function Hero() {
       activeTimeout = window.setTimeout(scrollToTarget, 2500);
     };
 
+    // Alias for hash-only calls (back-compat shape)
+    const scrollToHashStable = (hash: string) => scrollStable(hash);
+
     // 1. Initial mount — scroll to top OR to hash if present
     if (window.location.hash) {
-      scrollToHashStable(window.location.hash);
+      scrollStable(window.location.hash);
     } else {
-      window.scrollTo({ top: 0, left: 0, behavior: "instant" as ScrollBehavior });
+      scrollStable(null);
     }
 
     // 2. Hash change via Next.js navigation (different hash arrives via URL)
@@ -135,12 +157,17 @@ export default function Hero() {
   return (
     <section className="relative flex min-h-svh flex-col justify-center overflow-hidden py-20 md:py-24">
       <video
+        ref={videoRef}
         autoPlay
         muted
         loop
         playsInline
         preload="auto"
-        className="absolute inset-0 -z-20 h-full w-full object-cover"
+        controls={false}
+        disablePictureInPicture
+        disableRemotePlayback
+        controlsList="nodownload nofullscreen noremoteplayback"
+        className="pointer-events-none absolute inset-0 -z-20 h-full w-full object-cover"
         aria-hidden
       >
         <source src="/hero-bg.mp4" type="video/mp4" />
@@ -190,15 +217,15 @@ export default function Hero() {
               },
               ...transitionVariants,
             }}
-            className="mt-9 flex flex-col items-start gap-3 sm:flex-row"
+            className="mt-9 flex w-full flex-col items-stretch gap-3 sm:w-auto sm:flex-row sm:items-start"
           >
             <Button
               asChild
               size="lg"
-              className="rounded-full px-7 text-base shadow-lg"
+              className="rounded-full px-6 text-sm shadow-lg sm:px-7 sm:text-base"
             >
               <Link href="/#offres">
-                <span className="text-nowrap">Je commence maintenant</span>
+                <span>Je commence maintenant</span>
                 <ArrowRight className="ml-1 size-4" />
               </Link>
             </Button>
@@ -207,10 +234,10 @@ export default function Hero() {
                 asChild
                 size="lg"
                 variant="ghost"
-                className="rounded-full px-7 text-base text-white hover:bg-white/10 hover:text-white"
+                className="rounded-full px-6 text-sm text-white hover:bg-white/10 hover:text-white sm:px-7 sm:text-base"
               >
                 <Link href="/#programme">
-                  <span className="text-nowrap">Découvrir le programme</span>
+                  <span>Découvrir le programme</span>
                 </Link>
               </Button>
             </div>

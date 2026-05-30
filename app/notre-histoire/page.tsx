@@ -33,7 +33,7 @@ export default function NotreHistoire() {
           <p className="text-sm font-medium uppercase tracking-[0.25em] text-primary">
             Pourquoi nous ?
           </p>
-          <h1 className="mt-5 font-serif text-5xl font-semibold leading-[1.02] tracking-tight text-foreground md:text-7xl">
+          <h1 className="mt-5 font-serif text-4xl font-semibold leading-[1.02] tracking-tight text-foreground sm:text-5xl md:text-7xl">
             Une décision.
             <span className="block text-primary">Deux vies réinventées.</span>
           </h1>

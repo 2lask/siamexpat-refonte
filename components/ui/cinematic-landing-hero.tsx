@@ -322,6 +322,10 @@ export function CinematicHero({
 
   useEffect(() => {
     const isMobile = window.innerWidth < 768;
+    // Skip GSAP entirely on mobile — a dedicated <MobileProgram /> handles that layout.
+    // Running GSAP/ScrollTrigger here even when hidden would still pin the page and
+    // throw off cross-page scroll-to-top navigation.
+    if (isMobile) return;
 
     const ctx = gsap.context(() => {
       gsap.set(".text-track", {
@@ -553,30 +557,30 @@ export function CinematicHero({
       <div
         className="hero-text-wrapper transform-style-3d absolute z-10 flex w-screen flex-col items-center justify-center px-4 text-center will-change-transform"
       >
-        <h1 className="text-track gsap-reveal text-3d-matte mb-2 font-serif text-5xl font-bold tracking-tight md:text-7xl lg:text-[6rem]">
+        <h1 className="text-track gsap-reveal text-3d-matte mb-2 font-serif text-4xl font-bold tracking-tight sm:text-5xl md:text-7xl lg:text-[6rem]">
           {tagline1}
         </h1>
-        <h1 className="text-days gsap-reveal text-orange-matte font-serif text-5xl font-extrabold tracking-tighter md:text-7xl lg:text-[6rem]">
+        <h1 className="text-days gsap-reveal text-orange-matte font-serif text-4xl font-extrabold tracking-tighter sm:text-5xl md:text-7xl lg:text-[6rem]">
           {tagline2}
         </h1>
       </div>
 
       {/* BACKGROUND LAYER 2: Tactile CTA Buttons */}
       <div className="cta-wrapper gsap-reveal pointer-events-auto absolute z-30 flex w-screen flex-col items-center justify-center px-4 text-center will-change-transform">
-        <h2 className="text-orange-matte mb-6 font-serif text-4xl font-bold tracking-tight md:text-6xl lg:text-7xl">
+        <h2 className="text-orange-matte mb-5 font-serif text-3xl font-bold tracking-tight sm:mb-6 sm:text-4xl md:text-6xl lg:text-7xl">
           {ctaHeading}
         </h2>
-        <p className="mx-auto mb-12 max-w-xl text-lg font-light leading-relaxed text-muted-foreground md:text-xl">
+        <p className="mx-auto mb-8 max-w-xl text-base font-light leading-relaxed text-muted-foreground sm:mb-12 sm:text-lg md:text-xl">
           {ctaDescription}
         </p>
-        <div className="flex flex-col gap-6 sm:flex-row">
+        <div className="flex w-full max-w-md flex-col gap-4 sm:max-w-none sm:w-auto sm:flex-row sm:gap-6">
           <a
             href={primaryCta.href ?? "#"}
             aria-label={primaryCta.mainLabel}
-            className="btn-modern-light group flex items-center justify-center gap-3 rounded-[1.25rem] px-8 py-4 focus:outline-none focus:ring-2 focus:ring-primary focus:ring-offset-2"
+            className="btn-modern-light group flex items-center justify-center gap-3 rounded-[1.25rem] px-5 py-3.5 focus:outline-none focus:ring-2 focus:ring-primary focus:ring-offset-2 sm:px-8 sm:py-4"
           >
             <svg
-              className="h-7 w-7 text-[#e05d38] transition-transform group-hover:translate-x-1"
+              className="h-6 w-6 shrink-0 text-[#e05d38] transition-transform group-hover:translate-x-1 sm:h-7 sm:w-7"
               fill="none"
               stroke="currentColor"
               strokeWidth="2.5"
@@ -593,7 +597,7 @@ export function CinematicHero({
               <div className="mb-[-2px] text-[10px] font-bold uppercase tracking-wider text-neutral-500">
                 {primaryCta.topLabel}
               </div>
-              <div className="text-xl font-bold leading-none tracking-tight">
+              <div className="text-base font-bold leading-tight tracking-tight sm:text-xl sm:leading-none">
                 {primaryCta.mainLabel}
               </div>
             </div>
@@ -601,10 +605,10 @@ export function CinematicHero({
           <a
             href={secondaryCta.href ?? "#"}
             aria-label={secondaryCta.mainLabel}
-            className="btn-modern-dark group flex items-center justify-center gap-3 rounded-[1.25rem] px-8 py-4 focus:outline-none focus:ring-2 focus:ring-primary focus:ring-offset-2 focus:ring-offset-background"
+            className="btn-modern-dark group flex items-center justify-center gap-3 rounded-[1.25rem] px-5 py-3.5 focus:outline-none focus:ring-2 focus:ring-primary focus:ring-offset-2 focus:ring-offset-background sm:px-8 sm:py-4"
           >
             <svg
-              className="h-7 w-7 text-white transition-transform group-hover:translate-x-1"
+              className="h-6 w-6 shrink-0 text-white transition-transform group-hover:translate-x-1 sm:h-7 sm:w-7"
               fill="none"
               stroke="currentColor"
               strokeWidth="2.5"
@@ -621,7 +625,7 @@ export function CinematicHero({
               <div className="mb-[-2px] text-[10px] font-bold uppercase tracking-wider text-white/80">
                 {secondaryCta.topLabel}
               </div>
-              <div className="text-xl font-bold leading-none tracking-tight">
+              <div className="text-base font-bold leading-tight tracking-tight sm:text-xl sm:leading-none">
                 {secondaryCta.mainLabel}
               </div>
             </div>
@@ -640,20 +644,20 @@ export function CinematicHero({
         >
           <div className="card-sheen" aria-hidden="true" />
 
-          <div className="relative z-10 mx-auto flex h-full w-full max-w-7xl flex-col items-center justify-evenly px-4 py-6 lg:grid lg:grid-cols-3 lg:gap-8 lg:px-12 lg:py-0">
+          <div className="relative z-10 mx-auto flex h-full w-full max-w-7xl flex-col items-center justify-between px-4 py-4 sm:justify-evenly sm:py-6 lg:grid lg:grid-cols-3 lg:gap-8 lg:px-12 lg:py-0">
             {/* TOP (Mobile) / RIGHT (Desktop): BRAND NAME */}
             <div className="card-right-text gsap-reveal order-1 z-20 flex w-full justify-center lg:order-3 lg:mt-0 lg:justify-end">
-              <h2 className="text-card-warm-matte font-serif text-6xl font-black uppercase tracking-tighter md:text-[6rem] lg:text-[8rem]">
+              <h2 className="text-card-warm-matte font-serif text-4xl font-black uppercase tracking-tighter sm:text-6xl md:text-[6rem] lg:text-[8rem]">
                 {brandName}
               </h2>
             </div>
 
             {/* MIDDLE: iPhone Mockup */}
             <div
-              className="mockup-scroll-wrapper relative z-10 order-2 flex h-[380px] w-full items-center justify-center lg:order-2 lg:h-[600px]"
+              className="mockup-scroll-wrapper relative z-10 order-2 flex h-[240px] w-full items-center justify-center sm:h-[380px] lg:order-2 lg:h-[600px]"
               style={{ perspective: "1000px" }}
             >
-              <div className="relative flex h-full w-full scale-[0.65] items-center justify-center transform md:scale-85 lg:scale-100">
+              <div className="relative flex h-full w-full scale-[0.4] items-center justify-center transform sm:scale-[0.65] md:scale-[0.85] lg:scale-100">
                 <div
                   ref={mockupRef}
                   className="iphone-bezel transform-style-3d relative flex h-[580px] w-[280px] flex-col rounded-[3rem] will-change-transform"
@@ -833,11 +837,11 @@ export function CinematicHero({
             </div>
 
             {/* BOTTOM (Mobile) / LEFT (Desktop): Card Heading + Description */}
-            <div className="card-left-text gsap-reveal order-3 z-20 flex w-full flex-col justify-center px-4 text-center lg:order-1 lg:max-w-none lg:px-0 lg:text-left">
-              <h3 className="mb-0 font-serif text-2xl font-bold tracking-tight text-foreground md:text-3xl lg:mb-5 lg:text-4xl">
+            <div className="card-left-text gsap-reveal order-3 z-20 flex w-full flex-col justify-center px-2 text-center lg:order-1 lg:max-w-none lg:px-0 lg:text-left">
+              <h3 className="mb-2 font-serif text-base font-bold tracking-tight text-foreground sm:mb-3 sm:text-2xl md:text-3xl lg:mb-5 lg:text-4xl">
                 {cardHeading}
               </h3>
-              <p className="mx-auto hidden max-w-sm text-sm font-normal leading-relaxed text-muted-foreground md:block md:text-base lg:mx-0 lg:max-w-none lg:text-lg">
+              <p className="mx-auto max-w-sm text-[11px] font-normal leading-snug text-muted-foreground sm:text-sm sm:leading-relaxed md:text-base lg:mx-0 lg:max-w-none lg:text-lg">
                 {cardDescription}
               </p>
             </div>

@@ -118,7 +118,7 @@ export default function ProgrammePage() {
           <p className="text-sm font-medium uppercase tracking-[0.22em] text-primary">
             Le programme
           </p>
-          <h1 className="mt-4 font-serif text-5xl font-semibold leading-[1.02] tracking-tight text-foreground md:text-7xl">
+          <h1 className="mt-4 font-serif text-4xl font-semibold leading-[1.02] tracking-tight text-foreground sm:text-5xl md:text-7xl">
             Module
             <span className="text-primary"> par module.</span>
           </h1>

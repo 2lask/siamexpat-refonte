@@ -36,27 +36,27 @@ const INCLUDED = [
 
 export default function Pricing() {
   return (
-    <section id="offres" className="bg-muted py-24 md:py-28">
+    <section id="offres" className="bg-muted py-16 md:py-28">
       <div className="mx-auto max-w-6xl px-6">
         <div className="max-w-2xl">
-          <p className="text-sm font-medium uppercase tracking-wider text-primary">
+          <p className="text-xs font-medium uppercase tracking-wider text-primary md:text-sm">
             L'offre
           </p>
-          <h2 className="mt-3 font-serif text-4xl font-semibold leading-[1.1] tracking-tight text-foreground md:text-6xl">
+          <h2 className="mt-3 font-serif text-3xl font-semibold leading-[1.1] tracking-tight text-foreground sm:text-4xl md:text-6xl">
             Tu choisis le rythme.
             <span className="block text-primary">On t'embarque pareil.</span>
           </h2>
-          <p className="mt-5 text-lg leading-relaxed text-muted-foreground">
+          <p className="mt-5 text-base leading-relaxed text-muted-foreground md:text-lg">
             Une seule formation. Trois façons de la payer. Mêmes modules,
             même accès immédiat, même accès à vie — quelle que soit l'option.
           </p>
         </div>
 
-        <div className="mt-14 grid gap-5 md:grid-cols-3">
+        <div className="mt-10 grid gap-5 md:mt-14 md:grid-cols-3">
           {PLANS.map((p) => (
             <div
               key={p.name}
-              className={`relative flex flex-col rounded-2xl border p-7 transition-all ${
+              className={`relative flex flex-col rounded-2xl border p-6 transition-all md:p-7 ${
                 p.highlight
                   ? "border-primary bg-card shadow-[0_1px_2px_rgba(0,0,0,0.04),0_10px_30px_-12px_rgba(224,93,56,0.35)] ring-1 ring-primary/30"
                   : "border-border bg-card hover:-translate-y-0.5 hover:border-foreground/20"

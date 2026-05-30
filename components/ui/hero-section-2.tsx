@@ -183,7 +183,11 @@ const HeroSection2 = React.forwardRef<HTMLDivElement, HeroSection2Props>(
               loop
               playsInline
               preload="metadata"
-              className="h-full w-full object-cover"
+              controls={false}
+              disablePictureInPicture
+              disableRemotePlayback
+              controlsList="nodownload nofullscreen noremoteplayback"
+              className="pointer-events-none h-full w-full object-cover"
               aria-hidden
             >
               <source src={videoUrl} type="video/mp4" />

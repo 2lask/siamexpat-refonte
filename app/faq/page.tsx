@@ -62,7 +62,7 @@ export default function FaqPage() {
           <p className="text-sm font-medium uppercase tracking-[0.22em] text-primary">
             FAQ
           </p>
-          <h1 className="mt-4 font-serif text-5xl font-semibold leading-[1.02] tracking-tight text-foreground md:text-6xl">
+          <h1 className="mt-4 font-serif text-4xl font-semibold leading-[1.02] tracking-tight text-foreground sm:text-5xl md:text-6xl">
             Les questions
             <span className="block text-primary">qu'on nous pose.</span>
           </h1>
