@@ -1,3 +1,4 @@
+// Root layout — global metadata + font preconnect
 import type { Metadata } from "next";
 import "./globals.css";
 
