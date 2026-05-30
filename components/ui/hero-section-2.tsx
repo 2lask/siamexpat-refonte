@@ -10,8 +10,8 @@ interface FooterItem {
   value: string;
 }
 
-interface HeroSection2Props
-  extends Omit<React.HTMLAttributes<HTMLDivElement>, "title"> {
+interface HeroSection2Props {
+  className?: string;
   logo?: {
     url: string;
     alt: string;
@@ -64,7 +64,6 @@ const HeroSection2 = React.forwardRef<HTMLDivElement, HeroSection2Props>(
       videoUrl,
       backgroundImage,
       footerItems,
-      ...props
     },
     ref,
   ) => {
@@ -79,7 +78,6 @@ const HeroSection2 = React.forwardRef<HTMLDivElement, HeroSection2Props>(
         whileInView="visible"
         viewport={{ once: true, margin: "-80px" }}
         variants={containerVariants}
-        {...props}
       >
         <div className="flex w-full flex-col justify-between gap-12 p-8 md:w-1/2 md:p-12 lg:w-3/5 lg:p-16">
           <div>
