@@ -639,7 +639,10 @@ export function CinematicHero({
       >
         <div
           ref={mainCardRef}
-          className="main-card transparent-card gsap-reveal pointer-events-auto relative flex h-[92vh] w-[92vw] items-center justify-center overflow-hidden rounded-[32px] md:h-[85vh] md:w-[85vw] md:rounded-[40px]"
+          // Mobile: card grows with content (min-h, overflow-visible) so the
+          // full description is never clipped. Desktop keeps fixed dimensions
+          // for the GSAP morph animation.
+          className="main-card transparent-card gsap-reveal pointer-events-auto relative flex min-h-[92vh] w-[92vw] items-center justify-center overflow-visible rounded-[32px] md:h-[85vh] md:w-[85vw] md:overflow-hidden md:rounded-[40px]"
         >
           <div className="card-sheen" aria-hidden="true" />
 

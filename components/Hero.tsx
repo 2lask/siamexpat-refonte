@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useRef } from "react";
+import { useEffect, useRef, useState } from "react";
 import Link from "next/link";
 import { ArrowRight } from "lucide-react";
 
@@ -29,37 +29,30 @@ const transitionVariants = {
 
 export default function Hero() {
   const videoRef = useRef<HTMLVideoElement | null>(null);
+  const [videoPlaying, setVideoPlaying] = useState(false);
 
   useEffect(() => {
     const v = videoRef.current;
     if (!v) return;
 
-    // Belt-and-suspenders autoplay for iOS Safari, Android Chrome, low-power modes,
-    // background tabs, intersection visibility, and the first user touch.
     const tryPlay = () => {
       if (v.paused) v.play().catch(() => {});
     };
 
-    // 1. Try immediately on mount, and on a short retry loop in case the video
-    //    isn't decoded yet.
+    // Aggressive autoplay attempts — every signal that could unlock playback.
     tryPlay();
-    const retries = [50, 150, 500, 1200].map((delay) =>
+    const retries = [50, 150, 500, 1200, 2500].map((delay) =>
       window.setTimeout(tryPlay, delay),
     );
-
-    // 2. When the video element fires `loadedmetadata` / `canplay`, retry.
     v.addEventListener("loadedmetadata", tryPlay);
     v.addEventListener("canplay", tryPlay);
     v.addEventListener("loadeddata", tryPlay);
 
-    // 3. When the tab becomes visible again, retry.
     const onVisible = () => {
       if (!document.hidden) tryPlay();
     };
     document.addEventListener("visibilitychange", onVisible);
 
-    // 4. iOS Low Power Mode requires a user gesture — any first touch/click on
-    //    the page unlocks playback, so listen once.
     const onFirstGesture = () => {
       tryPlay();
       window.removeEventListener("touchstart", onFirstGesture);
@@ -68,8 +61,6 @@ export default function Hero() {
     window.addEventListener("touchstart", onFirstGesture, { passive: true });
     window.addEventListener("pointerdown", onFirstGesture, { passive: true });
 
-    // 5. Intersection observer — play when the hero scrolls into view (handy if
-    //    user navigates away and back without remount).
     let io: IntersectionObserver | null = null;
     if ("IntersectionObserver" in window) {
       io = new IntersectionObserver(
@@ -81,11 +72,24 @@ export default function Hero() {
       io.observe(v);
     }
 
+    // Track actual playback state — only mark the element visible once frames
+    // are flowing, so iOS's "tap to play" overlay (which only renders on a
+    // paused video) never appears to the user.
+    const onPlaying = () => setVideoPlaying(true);
+    const onPause = () => {
+      setVideoPlaying(false);
+      tryPlay();
+    };
+    v.addEventListener("playing", onPlaying);
+    v.addEventListener("pause", onPause);
+
     return () => {
       retries.forEach((id) => window.clearTimeout(id));
       v.removeEventListener("loadedmetadata", tryPlay);
       v.removeEventListener("canplay", tryPlay);
       v.removeEventListener("loadeddata", tryPlay);
+      v.removeEventListener("playing", onPlaying);
+      v.removeEventListener("pause", onPause);
       document.removeEventListener("visibilitychange", onVisible);
       window.removeEventListener("touchstart", onFirstGesture);
       window.removeEventListener("pointerdown", onFirstGesture);
@@ -218,13 +222,30 @@ export default function Hero() {
         disablePictureInPicture
         disableRemotePlayback
         controlsList="nodownload nofullscreen noremoteplayback"
-        className="absolute inset-0 -z-20 h-full w-full object-cover"
+        // While the video is paused/blocked, render it as if it were absent —
+        // hidden + zero size means iOS Safari's native "tap to play" overlay
+        // has nothing to draw on, so the play button never appears.
+        style={{
+          visibility: videoPlaying ? "visible" : "hidden",
+          opacity: videoPlaying ? 1 : 0,
+          width: videoPlaying ? "100%" : 0,
+          height: videoPlaying ? "100%" : 0,
+        }}
+        className="absolute inset-0 -z-20 object-cover transition-opacity duration-500"
         aria-hidden
       >
         <source src="/hero-bg.mp4" type="video/mp4" />
       </video>
-      {/* Invisible tap shield: if autoplay fails and iOS shows the play overlay,
-          a tap anywhere on the hero forces play() without exposing native controls. */}
+      {/* Solid dark fallback shown until the video is actually playing — keeps
+          the hero readable on first paint and on devices where autoplay is
+          blocked entirely (iOS Low Power Mode, slow connections, etc.). */}
+      {!videoPlaying && (
+        <div
+          className="absolute inset-0 -z-20 bg-foreground"
+          aria-hidden
+        />
+      )}
+      {/* Invisible tap shield: a tap anywhere on the hero re-attempts play(). */}
       <button
         type="button"
         onClick={() => videoRef.current?.play().catch(() => {})}

@@ -28,47 +28,46 @@ export function FeaturedSpotlight({
   indexNumber = "01",
 }: FeaturedSpotlightProps) {
   const [isHovered, setIsHovered] = useState(false);
-  const wrapperRef = useRef<HTMLAnchorElement | null>(null);
+  const wrapperRef = useRef<HTMLDivElement | null>(null);
+  const collapseTimer = useRef<number | null>(null);
   const ease = "cubic-bezier(0.16, 1, 0.3, 1)";
 
-  // On touch devices (no real hover), trigger the "hovered" state when the
-  // component scrolls into the viewport. Reverts when it leaves so users can
-  // see the animation more than once on scroll-up.
-  useEffect(() => {
-    if (typeof window === "undefined") return;
-    const isTouch =
-      window.matchMedia("(hover: none)").matches ||
-      "ontouchstart" in window;
-    if (!isTouch) return;
-
-    const el = wrapperRef.current;
-    if (!el || !("IntersectionObserver" in window)) {
-      setIsHovered(true); // safest fallback: always show "hovered" state on touch
-      return;
+  // On touch: first contact reveals the animated state; auto-collapse after
+  // 4s so the component returns to its idle look. Navigation is intentionally
+  // NOT triggered by touching the card — only the dedicated CTA chip below
+  // navigates. This matches the requested behavior: touch to preview, tap CTA
+  // to open.
+  const handlePointerEnter = () => {
+    if (collapseTimer.current) {
+      window.clearTimeout(collapseTimer.current);
+      collapseTimer.current = null;
     }
+    setIsHovered(true);
+  };
+  const handlePointerLeave = () => {
+    setIsHovered(false);
+  };
+  const handleTouchStart = () => {
+    if (collapseTimer.current) window.clearTimeout(collapseTimer.current);
+    setIsHovered(true);
+    collapseTimer.current = window.setTimeout(() => {
+      setIsHovered(false);
+    }, 4000);
+  };
 
-    const io = new IntersectionObserver(
-      (entries) => {
-        for (const entry of entries) {
-          setIsHovered(entry.intersectionRatio > 0.3);
-        }
-      },
-      { threshold: [0, 0.3, 0.6, 1] },
-    );
-    io.observe(el);
-    return () => io.disconnect();
+  useEffect(() => {
+    return () => {
+      if (collapseTimer.current) window.clearTimeout(collapseTimer.current);
+    };
   }, []);
 
   return (
-    <Link
+    <div
       ref={wrapperRef}
-      href={ctaHref}
-      className="group relative flex cursor-pointer flex-col items-center gap-8 no-underline md:flex-row md:items-start md:gap-12 lg:gap-16"
-      onMouseEnter={() => setIsHovered(true)}
-      onMouseLeave={() => setIsHovered(false)}
-      aria-label={`${
-        typeof titleLine1 === "string" ? titleLine1 : ""
-      } ${typeof titleLine2 === "string" ? titleLine2 : ""} — ${ctaLabel}`}
+      className="group relative flex flex-col items-center gap-8 no-underline md:flex-row md:items-start md:gap-12 lg:gap-16"
+      onMouseEnter={handlePointerEnter}
+      onMouseLeave={handlePointerLeave}
+      onTouchStart={handleTouchStart}
     >
       {/* LEFT: Text Block */}
       <div className="relative z-10 flex w-full max-w-[360px] shrink-0 flex-col items-center text-center md:w-[280px] md:items-start md:text-left lg:w-[320px] lg:pt-4">
@@ -128,8 +127,15 @@ export function FeaturedSpotlight({
           {description}
         </p>
 
-        {/* Minimal CTA */}
-        <div className="mt-6 flex items-center gap-4 md:mt-8 lg:mt-10">
+        {/* CTA — the ONLY element that navigates. Tap/click goes to ctaHref. */}
+        <Link
+          href={ctaHref}
+          onClick={(e) => e.stopPropagation()}
+          aria-label={`${
+            typeof titleLine1 === "string" ? titleLine1 : ""
+          } ${typeof titleLine2 === "string" ? titleLine2 : ""} — ${ctaLabel}`}
+          className="relative z-30 mt-6 flex items-center gap-4 no-underline md:mt-8 lg:mt-10"
+        >
           <div
             className="flex h-10 w-10 items-center justify-center rounded-full border transition-all duration-500 md:h-11 md:w-11 lg:h-12 lg:w-12"
             style={{
@@ -165,7 +171,7 @@ export function FeaturedSpotlight({
           >
             {ctaLabel}
           </span>
-        </div>
+        </Link>
       </div>
 
       {/* RIGHT: Image Block */}
@@ -275,6 +281,6 @@ export function FeaturedSpotlight({
           {indexNumber}
         </span>
       </div>
-    </Link>
+    </div>
   );
 }
