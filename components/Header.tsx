@@ -30,7 +30,12 @@ export default function Header() {
     <header>
       <nav
         data-state={open ? "active" : "idle"}
-        className="group fixed inset-x-0 top-0 z-50 px-2"
+        className={cn(
+          "group fixed inset-x-0 top-0 z-50 px-2 transition-transform duration-300",
+          // On mobile, slide the entire bar off-screen the moment the user
+          // starts scrolling. Desktop keeps the morphing pill behaviour.
+          scrolled && !open && "-translate-y-full lg:translate-y-0",
+        )}
       >
         <div
           className={cn(
