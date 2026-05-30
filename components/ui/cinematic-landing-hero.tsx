@@ -493,12 +493,13 @@ export function CinematicHero({
           { x: 0, autoAlpha: 1, scale: 1, ease: "expo.out", duration: 1.5 },
           "<",
         )
-        // Both holds shortened ~20% so the iPhone + card text fade out a
-        // little earlier in the scroll and the CTA + outro come quicker.
-        .to({}, { duration: 2 })
+        // Holds cut to ~half their original length — the iPhone + card text
+        // start fading out significantly earlier in the scroll, and the CTA
+        // outro arrives much faster.
+        .to({}, { duration: 1 })
         .set(".hero-text-wrapper", { autoAlpha: 0 })
         .set(".cta-wrapper", { autoAlpha: 1 })
-        .to({}, { duration: 1.2 })
+        .to({}, { duration: 0.6 })
         .to(
           [
             ".mockup-scroll-wrapper",
