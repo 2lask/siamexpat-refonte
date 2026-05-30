@@ -77,8 +77,8 @@ export default function ForWhom() {
         </div>
 
         <p className="mt-5 text-center text-xs italic text-muted-foreground md:text-sm">
-          Tu te reconnais à gauche ? Tu es{" "}
-          <span className="font-medium not-italic text-primary">au bon endroit</span>.
+          Si tu te reconnais dans ne serait-ce qu'un de ces points —{" "}
+          <span className="font-medium not-italic text-primary">tu es au bon endroit</span>.
         </p>
       </div>
     </section>
