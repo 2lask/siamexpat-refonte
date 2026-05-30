@@ -1,6 +1,8 @@
-// Root layout — global metadata + font preconnect
+// Root layout — global metadata + font preconnect + scroll progress bar
 import type { Metadata } from "next";
 import "./globals.css";
+
+import { ScrollProgress } from "@/components/ScrollProgress";
 
 export const metadata: Metadata = {
   title: "Siam Expat — Réussir son expatriation en Thaïlande",
@@ -30,7 +32,10 @@ export default function RootLayout({
           rel="stylesheet"
         />
       </head>
-      <body>{children}</body>
+      <body>
+        {children}
+        <ScrollProgress />
+      </body>
     </html>
   );
 }
