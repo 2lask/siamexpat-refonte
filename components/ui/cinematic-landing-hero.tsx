@@ -205,7 +205,7 @@ export interface CinematicHeroProps
   brandName?: string;
   tagline1?: string;
   tagline2?: string;
-  cardHeading?: string;
+  cardHeading?: React.ReactNode;
   cardDescription?: React.ReactNode;
   metricValue?: number;
   metricLabel?: string;
@@ -252,16 +252,21 @@ export function CinematicHero({
   brandName = "Le déclic",
   tagline1 = "Le plan exact.",
   tagline2 = "pour t'expatrier sans stress.",
-  cardHeading = "Une méthode claire, humaine et concrète.",
+  cardHeading = (
+    <>
+      Une méthode claire,{" "}
+      <span className="text-primary">humaine et concrète.</span>
+    </>
+  ),
   cardDescription = (
     <>
-      <span className="font-semibold text-foreground">
+      <span className="font-semibold text-primary">
         8 modules ultra-concrets
       </span>{" "}
       pour construire ta nouvelle vie en Thaïlande, étape par étape. Du visa
       long séjour à la fiscalité, de l'école des enfants à ta santé, du permis
       thaï à ton entreprise — chaque module reprend ce qu'on a{" "}
-      <span className="font-semibold text-foreground">
+      <span className="font-semibold text-primary">
         appris, vécu et surmonté
       </span>{" "}
       sur place. Pas un cours théorique. Pas une jolie carte postale. Une
