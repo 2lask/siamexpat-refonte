@@ -322,6 +322,10 @@ export function CinematicHero({
 
   useEffect(() => {
     const isMobile = window.innerWidth < 768;
+    // Mobile uses a dedicated <MobileProgram /> (rendered via CSS in
+    // Program.tsx), so GSAP must not run here — its pin would extend the page
+    // and confuse cross-page scroll-to-top navigation.
+    if (isMobile) return;
 
     const ctx = gsap.context(() => {
       gsap.set(".text-track", {
