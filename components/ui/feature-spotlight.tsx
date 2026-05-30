@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useRef, useState, type ReactNode } from "react";
+import { useRef, useState, type ReactNode } from "react";
 import Link from "next/link";
 import { ArrowUpRight } from "lucide-react";
 
@@ -29,45 +29,23 @@ export function FeaturedSpotlight({
 }: FeaturedSpotlightProps) {
   const [isHovered, setIsHovered] = useState(false);
   const wrapperRef = useRef<HTMLDivElement | null>(null);
-  const collapseTimer = useRef<number | null>(null);
   const ease = "cubic-bezier(0.16, 1, 0.3, 1)";
 
-  // On touch: first contact reveals the animated state; auto-collapse after
-  // 4s so the component returns to its idle look. Navigation is intentionally
-  // NOT triggered by touching the card — only the dedicated CTA chip below
-  // navigates. This matches the requested behavior: touch to preview, tap CTA
-  // to open.
-  const handlePointerEnter = () => {
-    if (collapseTimer.current) {
-      window.clearTimeout(collapseTimer.current);
-      collapseTimer.current = null;
-    }
-    setIsHovered(true);
-  };
-  const handlePointerLeave = () => {
-    setIsHovered(false);
-  };
-  const handleTouchStart = () => {
-    if (collapseTimer.current) window.clearTimeout(collapseTimer.current);
-    setIsHovered(true);
-    collapseTimer.current = window.setTimeout(() => {
-      setIsHovered(false);
-    }, 4000);
-  };
-
-  useEffect(() => {
-    return () => {
-      if (collapseTimer.current) window.clearTimeout(collapseTimer.current);
-    };
-  }, []);
+  // Activate while the finger / cursor is in contact, deactivate the instant
+  // it lifts. The dedicated CTA chip below is the only thing that navigates,
+  // so touching the card / image is purely a "preview" interaction.
+  const activate = () => setIsHovered(true);
+  const deactivate = () => setIsHovered(false);
 
   return (
     <div
       ref={wrapperRef}
       className="group relative flex flex-col items-center gap-8 no-underline md:flex-row md:items-start md:gap-12 lg:gap-16"
-      onMouseEnter={handlePointerEnter}
-      onMouseLeave={handlePointerLeave}
-      onTouchStart={handleTouchStart}
+      onMouseEnter={activate}
+      onMouseLeave={deactivate}
+      onTouchStart={activate}
+      onTouchEnd={deactivate}
+      onTouchCancel={deactivate}
     >
       {/* LEFT: Text Block */}
       <div className="relative z-10 flex w-full max-w-[360px] shrink-0 flex-col items-center text-center md:w-[280px] md:items-start md:text-left lg:w-[320px] lg:pt-4">

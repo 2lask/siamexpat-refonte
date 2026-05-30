@@ -649,7 +649,7 @@ export function CinematicHero({
           <div className="relative z-10 mx-auto flex h-full w-full max-w-7xl flex-col items-center justify-between px-4 py-4 sm:justify-evenly sm:py-6 lg:grid lg:grid-cols-3 lg:gap-8 lg:px-12 lg:py-0">
             {/* TOP (Mobile) / RIGHT (Desktop): BRAND NAME */}
             <div className="card-right-text gsap-reveal order-1 z-20 flex w-full justify-center lg:order-3 lg:mt-0 lg:justify-end">
-              <h2 className="text-card-warm-matte font-serif text-4xl font-black uppercase tracking-tighter sm:text-6xl md:text-[6rem] lg:text-[8rem]">
+              <h2 className="font-serif text-6xl font-black uppercase leading-none tracking-tighter text-primary drop-shadow-[0_10px_22px_rgba(224,93,56,0.4)] sm:text-7xl md:text-[6rem] lg:text-[8rem]">
                 {brandName}
               </h2>
             </div>
