@@ -322,10 +322,6 @@ export function CinematicHero({
 
   useEffect(() => {
     const isMobile = window.innerWidth < 768;
-    // Mobile uses a dedicated <MobileProgram /> (rendered via CSS in
-    // Program.tsx), so GSAP must not run here — its pin would extend the page
-    // and confuse cross-page scroll-to-top navigation.
-    if (isMobile) return;
 
     const ctx = gsap.context(() => {
       gsap.set(".text-track", {
@@ -651,9 +647,10 @@ export function CinematicHero({
           <div className="card-sheen" aria-hidden="true" />
 
           <div className="relative z-10 mx-auto flex h-full w-full max-w-7xl flex-col items-center justify-between px-4 py-4 sm:justify-evenly sm:py-6 lg:grid lg:grid-cols-3 lg:gap-8 lg:px-12 lg:py-0">
-            {/* TOP (Mobile) / RIGHT (Desktop): BRAND NAME */}
-            <div className="card-right-text gsap-reveal order-1 z-20 flex w-full justify-center lg:order-3 lg:mt-0 lg:justify-end">
-              <h2 className="font-serif text-6xl font-black uppercase leading-none tracking-tighter text-primary drop-shadow-[0_10px_22px_rgba(224,93,56,0.4)] sm:text-7xl md:text-[6rem] lg:text-[8rem]">
+            {/* BRAND NAME — mobile: floats top-right behind iPhone (watermark
+                style); desktop: normal grid column on the right. */}
+            <div className="card-right-text gsap-reveal pointer-events-none absolute right-2 top-[8%] z-0 max-w-[70%] text-right lg:pointer-events-auto lg:relative lg:right-auto lg:top-auto lg:order-3 lg:z-20 lg:flex lg:max-w-none lg:w-full lg:justify-end">
+              <h2 className="font-serif text-[3.5rem] font-black uppercase leading-none tracking-tighter text-primary drop-shadow-[0_10px_22px_rgba(224,93,56,0.45)] sm:text-[4.5rem] lg:text-[8rem]">
                 {brandName}
               </h2>
             </div>
@@ -844,10 +841,10 @@ export function CinematicHero({
 
             {/* BOTTOM (Mobile) / LEFT (Desktop): Card Heading + Description */}
             <div className="card-left-text gsap-reveal order-3 z-20 flex w-full flex-col justify-center px-2 text-center lg:order-1 lg:max-w-none lg:px-0 lg:text-left">
-              <h3 className="mb-2 font-serif text-base font-bold tracking-tight text-foreground sm:mb-3 sm:text-2xl md:text-3xl lg:mb-5 lg:text-4xl">
+              <h3 className="mb-3 font-serif text-2xl font-bold tracking-tight text-foreground sm:mb-3 sm:text-2xl md:text-3xl lg:mb-5 lg:text-4xl">
                 {cardHeading}
               </h3>
-              <p className="mx-auto max-w-sm text-[11px] font-normal leading-snug text-muted-foreground sm:text-sm sm:leading-relaxed md:text-base lg:mx-0 lg:max-w-none lg:text-lg">
+              <p className="mx-auto max-w-md text-[15px] font-normal leading-relaxed text-muted-foreground sm:text-sm sm:leading-relaxed md:text-base lg:mx-0 lg:max-w-none lg:text-lg">
                 {cardDescription}
               </p>
             </div>
