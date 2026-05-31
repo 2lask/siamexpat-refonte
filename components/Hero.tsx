@@ -211,6 +211,10 @@ export default function Hero() {
 
   return (
     <section className="relative flex min-h-svh flex-col justify-center overflow-hidden py-20 md:py-24">
+      {/* Solid dark backdrop — always rendered BEHIND the video so the hero
+          stays readable while the video is loading or while autoplay is
+          blocked. The video fades in on top of it once it actually starts. */}
+      <div className="absolute inset-0 -z-30 bg-foreground" aria-hidden />
       <video
         ref={videoRef}
         autoPlay
@@ -222,29 +226,15 @@ export default function Hero() {
         disablePictureInPicture
         disableRemotePlayback
         controlsList="nodownload nofullscreen noremoteplayback"
-        // While the video is paused/blocked, render it as if it were absent —
-        // hidden + zero size means iOS Safari's native "tap to play" overlay
-        // has nothing to draw on, so the play button never appears.
-        style={{
-          visibility: videoPlaying ? "visible" : "hidden",
-          opacity: videoPlaying ? 1 : 0,
-          width: videoPlaying ? "100%" : 0,
-          height: videoPlaying ? "100%" : 0,
-        }}
-        className="absolute inset-0 -z-20 object-cover transition-opacity duration-500"
+        // Keep the element at full size so the browser actually decodes and
+        // plays it — only fade visibility via opacity once the `playing`
+        // event has fired.
+        style={{ opacity: videoPlaying ? 1 : 0 }}
+        className="absolute inset-0 -z-20 h-full w-full object-cover transition-opacity duration-700"
         aria-hidden
       >
         <source src="/hero-bg.mp4" type="video/mp4" />
       </video>
-      {/* Solid dark fallback shown until the video is actually playing — keeps
-          the hero readable on first paint and on devices where autoplay is
-          blocked entirely (iOS Low Power Mode, slow connections, etc.). */}
-      {!videoPlaying && (
-        <div
-          className="absolute inset-0 -z-20 bg-foreground"
-          aria-hidden
-        />
-      )}
       {/* Invisible tap shield: a tap anywhere on the hero re-attempts play(). */}
       <button
         type="button"
