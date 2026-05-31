@@ -131,8 +131,12 @@ export default function ProgrammePage() {
       </section>
 
       {/* 8 MODULES — GRID 2 COLONNES */}
-      <section className="bg-card py-14 md:py-20">
-        <div className="mx-auto max-w-6xl px-6">
+      <section className="relative overflow-hidden bg-card py-14 md:py-20">
+        <div
+          className="pointer-events-none absolute -left-24 top-24 h-[300px] w-[300px] rounded-full bg-primary/16 blur-3xl md:-left-32 md:top-32 md:h-[460px] md:w-[460px]"
+          aria-hidden
+        />
+        <div className="relative mx-auto max-w-6xl px-6">
           <div className="mb-10 flex items-end justify-between md:mb-12">
             <p className="text-xs font-medium uppercase tracking-[0.25em] text-primary">
               Les 8 modules
@@ -172,8 +176,12 @@ export default function ProgrammePage() {
       </section>
 
       {/* CE QUE TU EN RETIRES — 6 piliers verbatim */}
-      <section className="border-y border-border bg-muted py-16 md:py-20">
-        <div className="mx-auto max-w-6xl px-6">
+      <section className="relative overflow-hidden border-y border-border bg-muted py-16 md:py-20">
+        <div
+          className="pointer-events-none absolute -right-24 bottom-16 h-[300px] w-[300px] rounded-full bg-primary/16 blur-3xl md:-right-32 md:bottom-24 md:h-[480px] md:w-[480px]"
+          aria-hidden
+        />
+        <div className="relative mx-auto max-w-6xl px-6">
           <div className="mb-10 max-w-2xl md:mb-14">
             <p className="text-xs font-medium uppercase tracking-[0.25em] text-primary">
               Ce que tu en retires
@@ -209,8 +217,12 @@ export default function ProgrammePage() {
       </section>
 
       {/* CTA minimal */}
-      <section className="bg-card py-14 md:py-16">
-        <div className="mx-auto max-w-3xl px-6 text-center">
+      <section className="relative overflow-hidden bg-card py-14 md:py-16">
+        <div
+          className="pointer-events-none absolute left-1/2 top-1/2 h-[320px] w-[320px] -translate-x-1/2 -translate-y-1/2 rounded-full bg-primary/14 blur-3xl md:h-[480px] md:w-[480px]"
+          aria-hidden
+        />
+        <div className="relative mx-auto max-w-3xl px-6 text-center">
           <p className="font-serif text-xl italic leading-relaxed text-foreground md:text-2xl">
             Le programme te parle ? L'offre est juste là.
           </p>
