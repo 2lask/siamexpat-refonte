@@ -8,11 +8,13 @@ import Pricing from "@/components/Pricing";
 import FinalCTA from "@/components/FinalCTA";
 import Footer from "@/components/Footer";
 import { HomeScrollMemory } from "@/components/HomeScrollMemory";
+import { HashCleaner } from "@/components/HashCleaner";
 
 export default function Home() {
   return (
     <main>
       <HomeScrollMemory />
+      <HashCleaner />
       <Header />
       <Hero />
       <PainPoints />
