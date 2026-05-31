@@ -3,7 +3,7 @@ const PLANS = [
     name: "En une fois",
     price: "127",
     sub: "€ · paiement unique",
-    description: "Le prix le plus bas. Tu démarres l'esprit libre.",
+    description: "Tout réglé d'un coup. Tu démarres l'esprit libre.",
     highlight: false,
     cta: "Je choisis ce rythme",
   },
