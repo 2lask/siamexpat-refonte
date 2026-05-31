@@ -111,7 +111,7 @@ export default function ProgrammePage() {
       <section className="relative overflow-hidden border-b border-border">
         <div className="bg-grain absolute inset-0 opacity-50" aria-hidden />
         <div
-          className="absolute -top-32 right-[-5%] h-[360px] w-[360px] rounded-full bg-primary/15 blur-3xl"
+          className="pointer-events-none absolute -right-24 -top-24 h-[300px] w-[300px] rounded-full bg-primary/18 blur-3xl md:-right-32 md:-top-32 md:h-[460px] md:w-[460px]"
           aria-hidden
         />
 
