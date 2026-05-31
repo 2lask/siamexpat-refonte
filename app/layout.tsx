@@ -3,6 +3,7 @@ import type { Metadata } from "next";
 import "./globals.css";
 
 import { ScrollProgress } from "@/components/ScrollProgress";
+import { PageLoader } from "@/components/PageLoader";
 
 export const metadata: Metadata = {
   title: "Siam Expat — Réussir son expatriation en Thaïlande",
@@ -33,6 +34,7 @@ export default function RootLayout({
         />
       </head>
       <body>
+        <PageLoader />
         {children}
         <ScrollProgress />
       </body>

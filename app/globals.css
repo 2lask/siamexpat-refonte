@@ -101,3 +101,33 @@ body {
     radial-gradient(rgba(51,51,51,0.05) 1px, transparent 1px);
   background-size: 16px 16px;
 }
+
+/* === Page loader === */
+@keyframes page-loader-logo-in {
+  from { opacity: 0; transform: scale(0.92); filter: blur(8px); }
+  to { opacity: 1; transform: scale(1); filter: blur(0); }
+}
+.page-loader-logo {
+  animation: page-loader-logo-in 0.65s ease-out;
+}
+@keyframes page-loader-dot {
+  0%, 100% { opacity: 0.25; transform: translateY(0); }
+  40%      { opacity: 1;    transform: translateY(-5px); }
+}
+.page-loader-dot { animation: page-loader-dot 1.2s ease-in-out infinite; }
+.page-loader-dot-1 { animation-delay: 0s;    }
+.page-loader-dot-2 { animation-delay: 0.15s; }
+.page-loader-dot-3 { animation-delay: 0.30s; }
+
+/* === iOS Safari video — strip every native overlay so the hero video
+   never paints a "tap to play" or controls layer on top while it's
+   waiting to start. === */
+video::-webkit-media-controls,
+video::-webkit-media-controls-panel,
+video::-webkit-media-controls-overlay-play-button,
+video::-webkit-media-controls-start-playback-button,
+video::-webkit-media-controls-play-button {
+  display: none !important;
+  -webkit-appearance: none !important;
+  appearance: none !important;
+}
