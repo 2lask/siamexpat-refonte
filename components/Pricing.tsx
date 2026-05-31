@@ -1,7 +1,3 @@
-import { Fragment } from "react";
-
-import { GlowingShadow } from "@/components/ui/glowing-shadow";
-
 const PLANS = [
   {
     name: "En une fois",
@@ -40,8 +36,12 @@ const INCLUDED = [
 
 export default function Pricing() {
   return (
-    <section id="offres" className="bg-muted py-16 md:py-28">
-      <div className="mx-auto max-w-6xl px-6">
+    <section id="offres" className="relative overflow-hidden bg-muted py-16 md:py-28">
+      <div
+        className="pointer-events-none absolute -right-24 top-1/3 h-[320px] w-[320px] -translate-y-1/2 rounded-full bg-primary/16 blur-3xl md:-right-32 md:h-[480px] md:w-[480px]"
+        aria-hidden
+      />
+      <div className="relative mx-auto max-w-6xl px-6">
         <div className="max-w-2xl">
           <p className="text-xs font-medium uppercase tracking-wider text-primary md:text-sm">
             L'offre
@@ -57,56 +57,47 @@ export default function Pricing() {
         </div>
 
         <div className="mt-10 grid gap-5 md:mt-14 md:grid-cols-3">
-          {PLANS.map((p) => {
-            const card = (
-              <div
-                className={`relative flex h-full flex-col rounded-2xl border p-6 transition-all md:p-7 ${
+          {PLANS.map((p) => (
+            <div
+              key={p.name}
+              className={`relative flex flex-col rounded-2xl border p-6 transition-all md:p-7 ${
+                p.highlight
+                  ? "border-primary bg-card shadow-[0_1px_2px_rgba(0,0,0,0.04),0_10px_30px_-12px_rgba(224,93,56,0.35)] ring-1 ring-primary/30"
+                  : "border-border bg-card hover:-translate-y-0.5 hover:border-foreground/20"
+              }`}
+            >
+              {p.highlight && (
+                <span className="absolute -top-3 left-6 rounded-full bg-primary px-3 py-1 text-[10px] font-semibold uppercase tracking-[0.15em] text-primary-foreground">
+                  Le plus choisi
+                </span>
+              )}
+
+              <p className="text-xs font-medium uppercase tracking-wider text-muted-foreground">
+                {p.name}
+              </p>
+              <div className="mt-3 flex items-baseline gap-1">
+                <span className="font-serif text-6xl font-semibold leading-none text-foreground">
+                  {p.price}
+                </span>
+                <span className="text-sm text-muted-foreground">{p.sub}</span>
+              </div>
+              <p className="mt-3 text-sm leading-relaxed text-muted-foreground">
+                {p.description}
+              </p>
+
+              <a
+                href="https://siamexpat.systeme.io/6587c8d3-c1e6e349"
+                className={`mt-8 inline-flex items-center justify-center gap-2 rounded-full px-5 py-3 text-sm font-medium transition-all ${
                   p.highlight
-                    ? "border-primary bg-card shadow-[0_1px_2px_rgba(0,0,0,0.04),0_10px_30px_-12px_rgba(224,93,56,0.35)] ring-1 ring-primary/30"
-                    : "border-border bg-card hover:-translate-y-0.5 hover:border-foreground/20"
+                    ? "bg-primary text-primary-foreground hover:bg-primary/90"
+                    : "border border-foreground/15 bg-transparent text-foreground hover:border-foreground/40"
                 }`}
               >
-                {p.highlight && (
-                  <span className="absolute -top-3 left-6 rounded-full bg-primary px-3 py-1 text-[10px] font-semibold uppercase tracking-[0.15em] text-primary-foreground">
-                    Le plus choisi
-                  </span>
-                )}
-
-                <p className="text-xs font-medium uppercase tracking-wider text-muted-foreground">
-                  {p.name}
-                </p>
-                <div className="mt-3 flex items-baseline gap-1">
-                  <span className="font-serif text-6xl font-semibold leading-none text-foreground">
-                    {p.price}
-                  </span>
-                  <span className="text-sm text-muted-foreground">{p.sub}</span>
-                </div>
-                <p className="mt-3 text-sm leading-relaxed text-muted-foreground">
-                  {p.description}
-                </p>
-
-                <a
-                  href="https://siamexpat.systeme.io/6587c8d3-c1e6e349"
-                  className={`mt-8 inline-flex items-center justify-center gap-2 rounded-full px-5 py-3 text-sm font-medium transition-all ${
-                    p.highlight
-                      ? "bg-primary text-primary-foreground hover:bg-primary/90"
-                      : "border border-foreground/15 bg-transparent text-foreground hover:border-foreground/40"
-                  }`}
-                >
-                  {p.cta}
-                  <span>→</span>
-                </a>
-              </div>
-            );
-
-            return p.highlight ? (
-              <GlowingShadow key={p.name} className="rounded-2xl">
-                {card}
-              </GlowingShadow>
-            ) : (
-              <Fragment key={p.name}>{card}</Fragment>
-            );
-          })}
+                {p.cta}
+                <span>→</span>
+              </a>
+            </div>
+          ))}
         </div>
 
         <div className="mt-12">

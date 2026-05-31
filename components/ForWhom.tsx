@@ -18,8 +18,12 @@ const NOT_FOR = [
 
 export default function ForWhom() {
   return (
-    <section id="pour-qui" className="bg-card py-10 md:py-12">
-      <div className="mx-auto max-w-5xl px-6">
+    <section id="pour-qui" className="relative overflow-hidden bg-card py-10 md:py-12">
+      <div
+        className="pointer-events-none absolute -left-24 top-1/3 h-[300px] w-[300px] -translate-y-1/2 rounded-full bg-primary/18 blur-3xl md:-left-32 md:h-[440px] md:w-[440px]"
+        aria-hidden
+      />
+      <div className="relative mx-auto max-w-5xl px-6">
         <div className="text-center">
           <p className="text-[11px] font-medium uppercase tracking-[0.25em] text-primary">
             Pour qui · Pour qui pas

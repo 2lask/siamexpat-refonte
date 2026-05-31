@@ -7,11 +7,11 @@ export default function Founders() {
       className="relative overflow-hidden bg-card py-20 md:py-28"
     >
       <div
-        className="pointer-events-none absolute -left-32 top-1/2 hidden h-[420px] w-[420px] -translate-y-1/2 rounded-full bg-primary/8 blur-3xl md:block"
+        className="pointer-events-none absolute -left-24 top-1/2 h-[320px] w-[320px] -translate-y-1/2 rounded-full bg-primary/18 blur-3xl md:-left-32 md:h-[460px] md:w-[460px]"
         aria-hidden
       />
       <div
-        className="pointer-events-none absolute -right-32 -bottom-32 hidden h-[360px] w-[360px] rounded-full bg-primary/5 blur-3xl md:block"
+        className="pointer-events-none absolute -right-24 -bottom-24 h-[260px] w-[260px] rounded-full bg-primary/14 blur-3xl md:-right-32 md:-bottom-32 md:h-[400px] md:w-[400px]"
         aria-hidden
       />
 
