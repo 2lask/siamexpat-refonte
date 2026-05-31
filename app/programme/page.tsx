@@ -4,6 +4,7 @@ import { ArrowRight, ArrowLeft } from "lucide-react";
 
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
+import { BackToHomeLink } from "@/components/BackToHomeLink";
 
 export const metadata: Metadata = {
   title: "Le programme — 8 modules en détail · Siam Expat",
@@ -221,13 +222,10 @@ export default function ProgrammePage() {
               Voir les offres
               <ArrowRight className="size-4" />
             </Link>
-            <Link
-              href="/"
-              className="inline-flex items-center justify-center gap-2 rounded-full border border-border bg-card px-7 py-3.5 text-base font-medium text-foreground transition-colors hover:border-foreground/40"
-            >
+            <BackToHomeLink className="inline-flex items-center justify-center gap-2 rounded-full border border-border bg-card px-7 py-3.5 text-base font-medium text-foreground transition-colors hover:border-foreground/40">
               <ArrowLeft className="size-4" />
               Retour à l'accueil
-            </Link>
+            </BackToHomeLink>
           </div>
         </div>
       </section>

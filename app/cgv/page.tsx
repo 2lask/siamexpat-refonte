@@ -1,9 +1,9 @@
 import type { Metadata } from "next";
-import Link from "next/link";
 import { ArrowLeft } from "lucide-react";
 
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
+import { BackToHomeLink } from "@/components/BackToHomeLink";
 
 export const metadata: Metadata = {
   title: "Conditions générales de vente · Siam Expat",
@@ -172,13 +172,10 @@ export default function CgvPage() {
 
       <section className="bg-muted py-12 md:py-14">
         <div className="mx-auto max-w-3xl px-6 text-center">
-          <Link
-            href="/"
-            className="inline-flex items-center justify-center gap-2 rounded-full border border-border bg-card px-7 py-3.5 text-base font-medium text-foreground transition-colors hover:border-foreground/40"
-          >
+          <BackToHomeLink className="inline-flex items-center justify-center gap-2 rounded-full border border-border bg-card px-7 py-3.5 text-base font-medium text-foreground transition-colors hover:border-foreground/40">
             <ArrowLeft className="size-4" />
             Retour à l'accueil
-          </Link>
+          </BackToHomeLink>
         </div>
       </section>
 

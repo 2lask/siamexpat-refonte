@@ -7,10 +7,12 @@ import Founders from "@/components/Founders";
 import Pricing from "@/components/Pricing";
 import FinalCTA from "@/components/FinalCTA";
 import Footer from "@/components/Footer";
+import { HomeScrollMemory } from "@/components/HomeScrollMemory";
 
 export default function Home() {
   return (
     <main>
+      <HomeScrollMemory />
       <Header />
       <Hero />
       <PainPoints />
