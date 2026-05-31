@@ -22,8 +22,12 @@ const COLS = [
 
 export default function Footer() {
   return (
-    <footer className="border-t border-border bg-card py-16">
-      <div className="mx-auto max-w-6xl px-6">
+    <footer className="relative overflow-hidden border-t border-border bg-card py-16">
+      <div
+        className="pointer-events-none absolute -left-24 -bottom-24 h-[300px] w-[300px] rounded-full bg-primary/16 blur-3xl md:-left-32 md:-bottom-32 md:h-[460px] md:w-[460px]"
+        aria-hidden
+      />
+      <div className="relative mx-auto max-w-6xl px-6">
         <div className="grid gap-12 md:grid-cols-4">
           <div className="md:col-span-1">
             <Image
