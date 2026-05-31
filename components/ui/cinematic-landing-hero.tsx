@@ -269,9 +269,8 @@ export function CinematicHero({
       <span className="font-semibold text-primary">
         appris, vécu et surmonté
       </span>{" "}
-      sur place. Pas un cours théorique. Pas une jolie carte postale. Une
-      formation humaine, concrète, conçue pour t'aider à poser tes valises sans
-      galérer.
+      sur place. Chaque module : une vidéo dense, des checklists prêtes à
+      l'emploi, et tout le concret dont on aurait rêvé avant de partir.
     </>
   ),
   metricValue = 8,
