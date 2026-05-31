@@ -22,11 +22,11 @@ export default function NotreHistoire() {
       <section className="relative overflow-hidden border-b border-border">
         <div className="bg-grain absolute inset-0 opacity-50" aria-hidden />
         <div
-          className="absolute -top-32 right-[-10%] h-[420px] w-[420px] rounded-full bg-primary/15 blur-3xl"
+          className="pointer-events-none absolute -top-24 -right-24 h-[300px] w-[300px] rounded-full bg-primary/18 blur-3xl md:-top-32 md:-right-32 md:h-[460px] md:w-[460px]"
           aria-hidden
         />
         <div
-          className="absolute -bottom-32 left-[-10%] h-[360px] w-[360px] rounded-full bg-primary/10 blur-3xl"
+          className="pointer-events-none absolute -bottom-24 -left-24 h-[260px] w-[260px] rounded-full bg-primary/14 blur-3xl md:-bottom-32 md:-left-32 md:h-[400px] md:w-[400px]"
           aria-hidden
         />
 
@@ -50,8 +50,12 @@ export default function NotreHistoire() {
       </section>
 
       {/* ============ LE STOP — narrative poétique + photo ============ */}
-      <section className="bg-card py-20 md:py-28">
-        <div className="mx-auto max-w-6xl px-6">
+      <section className="relative overflow-hidden bg-card py-20 md:py-28">
+        <div
+          className="pointer-events-none absolute -right-24 top-1/3 h-[300px] w-[300px] -translate-y-1/2 rounded-full bg-primary/16 blur-3xl md:-right-32 md:h-[480px] md:w-[480px]"
+          aria-hidden
+        />
+        <div className="relative mx-auto max-w-6xl px-6">
           <div className="grid items-center gap-14 md:grid-cols-[1.05fr_0.95fr] md:gap-20">
             <div className="relative order-2 md:order-1">
               <p className="text-xs font-medium uppercase tracking-[0.25em] text-primary">
@@ -109,7 +113,7 @@ export default function NotreHistoire() {
       {/* ============ NARRATION FLUIDE — Saut → Erreurs → Formation ============ */}
       <section className="relative overflow-hidden border-y border-border bg-muted py-20 md:py-28">
         <div
-          className="absolute left-1/2 top-1/2 hidden h-[520px] w-[520px] -translate-x-1/2 -translate-y-1/2 rounded-full bg-primary/8 blur-3xl md:block"
+          className="pointer-events-none absolute left-1/2 top-1/2 h-[360px] w-[360px] -translate-x-1/2 -translate-y-1/2 rounded-full bg-primary/16 blur-3xl md:h-[520px] md:w-[520px]"
           aria-hidden
         />
 
@@ -174,8 +178,12 @@ export default function NotreHistoire() {
       </section>
 
       {/* ============ CTA ============ */}
-      <section className="bg-card py-20 md:py-24">
-        <div className="mx-auto max-w-3xl px-6 text-center">
+      <section className="relative overflow-hidden bg-card py-20 md:py-24">
+        <div
+          className="pointer-events-none absolute -left-24 top-1/2 h-[300px] w-[300px] -translate-y-1/2 rounded-full bg-primary/16 blur-3xl md:-left-32 md:h-[460px] md:w-[460px]"
+          aria-hidden
+        />
+        <div className="relative mx-auto max-w-3xl px-6 text-center">
           <p className="text-xs font-medium uppercase tracking-[0.25em] text-primary">
             Si notre chemin te parle
           </p>
