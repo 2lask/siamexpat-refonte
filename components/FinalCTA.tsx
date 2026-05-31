@@ -139,7 +139,7 @@ export default function FinalCTA() {
 
         <div
           ref={giantRef}
-          className="finalcta-giant-text pointer-events-none absolute inset-x-0 bottom-[-3%] select-none text-center md:whitespace-nowrap"
+          className="finalcta-giant-text pointer-events-none absolute inset-x-0 bottom-[-16%] select-none text-center md:bottom-[-3%] md:whitespace-nowrap"
           aria-hidden
         >
           <span className="block md:inline">SIAM</span>
