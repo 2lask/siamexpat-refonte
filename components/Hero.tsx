@@ -336,11 +336,11 @@ export default function Hero() {
             />
             <div className="max-w-xl">
               <p className="text-[11px] uppercase tracking-[0.22em] text-white/70">
+                Accès immédiat
+                <span className="mx-2 text-primary">·</span>
                 Accompagnement humain
                 <span className="mx-2 text-primary">·</span>
                 Accès à vie
-                <span className="mx-2 text-primary">·</span>
-                Mises à jour incluses
               </p>
               <p className="mt-4 font-serif text-base font-semibold text-white drop-shadow">
                 Une formation complète.
