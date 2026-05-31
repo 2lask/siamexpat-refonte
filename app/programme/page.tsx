@@ -224,7 +224,7 @@ export default function ProgrammePage() {
         />
         <div className="relative mx-auto max-w-3xl px-6 text-center">
           <p className="font-serif text-xl italic leading-relaxed text-foreground md:text-2xl">
-            Le programme te parle ? L'offre est juste là.
+            Le programme te parle ? Plus qu'à choisir ton rythme.
           </p>
           <div className="mt-7 flex flex-col items-center justify-center gap-3 sm:flex-row">
             <Link
