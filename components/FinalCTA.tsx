@@ -11,7 +11,7 @@ export default function FinalCTA() {
         </h2>
         <p className="mt-6 text-base leading-relaxed text-background/70 md:text-lg">
           Changer de pays, c'est pas juste partir. C'est repenser ta vie.
-          Et cette formation, c'est la première pierre — posée avec méthode.
+          Et cette formation, c'est l'épaule qu'on aurait voulu avoir — on te la tend.
         </p>
 
         <a
