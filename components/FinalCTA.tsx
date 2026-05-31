@@ -129,7 +129,7 @@ export default function FinalCTA() {
       <style dangerouslySetInnerHTML={{ __html: STYLES }} />
       <section
         ref={wrapperRef}
-        className="relative overflow-hidden bg-foreground py-28 text-background md:py-40"
+        className="relative overflow-hidden bg-foreground pt-28 pb-44 text-background md:py-40"
       >
         <div
           className="finalcta-aurora pointer-events-none absolute left-1/2 top-1/2 h-[80vh] w-[90vw] -translate-x-1/2 -translate-y-1/2 animate-finalcta-breathe rounded-full blur-3xl"
@@ -139,7 +139,7 @@ export default function FinalCTA() {
 
         <div
           ref={giantRef}
-          className="finalcta-giant-text pointer-events-none absolute inset-x-0 bottom-[-16%] select-none text-center md:bottom-[-3%] md:whitespace-nowrap"
+          className="finalcta-giant-text pointer-events-none absolute inset-x-0 bottom-[-3%] select-none text-center md:whitespace-nowrap"
           aria-hidden
         >
           <span className="block md:inline">SIAM</span>
