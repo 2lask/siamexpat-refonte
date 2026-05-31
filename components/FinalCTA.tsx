@@ -12,21 +12,29 @@ if (typeof window !== "undefined") {
 
 const STYLES = `
   .finalcta-giant-text {
-    font-size: clamp(56px, 13vw, 220px);
-    line-height: 0.85;
+    /* Mobile: stacked SIAM / EXPAT — each word can run much bigger */
+    font-size: clamp(110px, 26vw, 170px);
+    line-height: 0.82;
     font-weight: 900;
     letter-spacing: -0.05em;
     color: transparent;
-    -webkit-text-stroke: 1px color-mix(in oklch, var(--primary) 30%, transparent);
+    -webkit-text-stroke: 1px color-mix(in oklch, var(--primary) 32%, transparent);
     background: linear-gradient(
       180deg,
       var(--primary) 0%,
-      color-mix(in oklch, var(--primary) 60%, transparent) 35%,
-      transparent 90%
+      color-mix(in oklch, var(--primary) 70%, transparent) 55%,
+      color-mix(in oklch, var(--primary) 18%, transparent) 100%
     );
     -webkit-background-clip: text;
     background-clip: text;
     filter: drop-shadow(0 0 60px color-mix(in oklch, var(--primary) 22%, transparent));
+  }
+
+  @media (min-width: 768px) {
+    .finalcta-giant-text {
+      /* Desktop: single-line wordmark */
+      font-size: clamp(140px, 13vw, 220px);
+    }
   }
 
   .finalcta-aurora {
@@ -131,10 +139,11 @@ export default function FinalCTA() {
 
         <div
           ref={giantRef}
-          className="finalcta-giant-text pointer-events-none absolute inset-x-0 bottom-[-4%] select-none whitespace-nowrap text-center"
+          className="finalcta-giant-text pointer-events-none absolute inset-x-0 bottom-[-3%] select-none text-center md:whitespace-nowrap"
           aria-hidden
         >
-          SIAM EXPAT
+          <span className="block md:inline">SIAM</span>
+          <span className="block md:ml-[0.2em] md:inline">EXPAT</span>
         </div>
 
         <div className="relative z-10 mx-auto max-w-3xl px-6 text-center">
