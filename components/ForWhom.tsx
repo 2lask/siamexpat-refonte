@@ -26,7 +26,7 @@ export default function ForWhom() {
       <div className="relative mx-auto max-w-5xl px-6">
         <div className="text-center">
           <p className="text-[11px] font-medium uppercase tracking-[0.25em] text-primary">
-            Pour qui · Pour qui pas
+            Le bon profil ?
           </p>
           <h2 className="mt-2 font-serif text-2xl font-semibold leading-tight tracking-tight text-foreground md:text-3xl">
             On préfère être clairs,{" "}
