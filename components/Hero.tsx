@@ -255,14 +255,6 @@ export default function Hero() {
       />
 
       <div
-        className="absolute inset-0 -z-10 bg-gradient-to-br from-foreground/85 via-foreground/70 to-foreground/55"
-        aria-hidden
-      />
-      <div
-        className="absolute inset-0 -z-10 bg-gradient-to-t from-foreground/65 to-transparent"
-        aria-hidden
-      />
-      <div
         className="pointer-events-none absolute inset-x-0 bottom-0 h-6 bg-gradient-to-b from-transparent to-muted md:h-9"
         aria-hidden
       />
