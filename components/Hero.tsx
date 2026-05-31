@@ -215,6 +215,16 @@ export default function Hero() {
           stays readable while the video is loading or while autoplay is
           blocked. The video fades in on top of it once it actually starts. */}
       <div className="absolute inset-0 -z-30 bg-foreground" aria-hidden />
+      {/* Poster image — a still frame from the video. Always rendered behind
+          the video element so that even when autoplay is blocked (iOS Low
+          Power Mode, Reduced Data Mode, etc.), the visitor sees a real
+          scenic shot instead of a blank dark backdrop. */}
+      <img
+        src="/hero-bg-poster.jpg"
+        alt=""
+        aria-hidden
+        className="pointer-events-none absolute inset-0 -z-[25] h-full w-full object-cover"
+      />
       <video
         ref={videoRef}
         autoPlay
@@ -222,6 +232,7 @@ export default function Hero() {
         loop
         playsInline
         preload="auto"
+        poster="/hero-bg-poster.jpg"
         controls={false}
         disablePictureInPicture
         disableRemotePlayback
